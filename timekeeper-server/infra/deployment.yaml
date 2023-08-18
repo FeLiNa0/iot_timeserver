@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: timekeeper-server
+  labels:
+    app: timekeeper-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: timekeeper-server
+  template:
+    metadata:
+      labels:
+        app: timekeeper-server
+    spec:
+      containers:
+      - name: timekeeper-server
+        image: timekeeper-server-skaffold-local
+        ports:
+        - containerPort: 80

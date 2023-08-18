@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: debug-redis-commander
+  name: debug-redis-commander
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: debug-redis-commander
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: debug-redis-commander
+    spec:
+      containers:
+      - env:
+        - name: SENTINEL_HOST
+          value: "redis-sentinel"
+        - name: SENTINEL_NAME
+          value: "redisset"
+        - name: SENTINEL_PORT
+          value: "26379"
+        image: rediscommander/redis-commander
+        imagePullPolicy: ""
+        name: debug-redis-commander
+        ports:
+        - containerPort: 8081
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

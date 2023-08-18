@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis-sentinel
+  name: redis-sentinel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis-sentinel
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: redis-sentinel
+    spec:
+      containers:
+      - env:
+        - name: REDIS_MASTER_HOST
+          value: redis
+        - name: REDIS_MASTER_SET
+          value: redisset
+        image: bitnami/redis-sentinel:6.0.16
+        imagePullPolicy: ""
+        name: redis-sentinel
+        ports:
+        - containerPort: 26379
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

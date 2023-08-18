@@ -1,0 +1,54 @@
+[project]
+name = "timekeeper_server"
+version = "0.1"
+dependencies = [
+    "fastapi",
+    "pydantic>=2",
+    "pytz",
+    "uvicorn",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ipython",
+    "pytest",
+    "pytest-mock",
+    "pytest-cov",
+    "pytest-asyncio",
+    "black",
+    "isort",
+    "pylint",
+    "pydocstyle",
+    "bandit",
+    "safety",
+    "mypy",
+    "types-redis",
+]
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+(
+  /(
+      \.eggs
+    | \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | migrations
+  )/
+)
+'''

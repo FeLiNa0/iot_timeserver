@@ -1,0 +1,35 @@
+apiVersion: skaffold/v4beta6
+kind: Config
+metadata:
+  name: timekeeper-server
+build:
+  artifacts:
+    - image: timekeeper-server-skaffold-local
+      context: ./timekeeper-server
+manifests:
+  kustomize:
+    paths:
+    - ./timekeeper-server/infra
+  rawYaml:
+  - ./infra/*.yaml
+deploy:
+  helm:
+    releases:
+    - name: nginx-ingress
+      # https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+      remoteChart: oci://ghcr.io/nginxinc/charts/nginx-ingress
+    # - name: redis
+    #   # https://artifacthub.io/packages/helm/bitnami/redis-cluster
+    #   remoteChart: oci://registry-1.docker.io/bitnamicharts/redis-cluster
+    - name: memcached
+      remoteChart: oci://registry-1.docker.io/bitnamicharts/memcached
+portForward:
+- resourceType: service
+  resourceName: nginx-ingress-controller
+  port: 80
+  localPort: 8080 # *Optional*
+- resourceType: service
+  resourceName: debug-redis-commander
+  namespace: default
+  port: 8081
+  localPort: 8081 # *Optional*
