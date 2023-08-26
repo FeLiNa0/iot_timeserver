@@ -1,2 +1,2 @@
 #!/bin/sh
-exec uvicorn timekeeper_server.main:app --reload
+exec "$(dirname "$0")"/run.sh --reload
