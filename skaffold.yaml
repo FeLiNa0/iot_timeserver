@@ -9,7 +9,8 @@ build:
 manifests:
   kustomize:
     paths:
-    - ./timekeeper-server/infra
+    - ./timekeeper-server-py/infra
+    - ./timekeeper-server-rust/infra
   rawYaml:
   - ./infra/*.yaml
 deploy:
@@ -18,11 +19,6 @@ deploy:
     - name: nginx-ingress
       # https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
       remoteChart: oci://ghcr.io/nginxinc/charts/nginx-ingress
-    # - name: redis
-    #   # https://artifacthub.io/packages/helm/bitnami/redis-cluster
-    #   remoteChart: oci://registry-1.docker.io/bitnamicharts/redis-cluster
-    - name: memcached
-      remoteChart: oci://registry-1.docker.io/bitnamicharts/memcached
 portForward:
 - resourceType: service
   resourceName: nginx-ingress-controller

@@ -26,4 +26,4 @@ def main():
     ipv4 = ipaddress.ip_address("8.8.4.4")
     print("Ping google.com: %f ms" % (wifi.radio.ping(ipv4)*1000))
     
-    draw()
+    draw("TIME TODO")
